@@ -1,0 +1,143 @@
+reset
+
+# png
+# set terminal png size 410,250 enhanced font 'Verdana,9'
+# set output 'data.png'
+# svg
+# set terminal svg size 800,500 fname 'Verdana, Helvetica, Arial, sans-serif' fsize '13' rounded dashed
+# set output 'refl_woerr.svg'
+
+###################################
+### ### ###   COLOURS   ### ### ###
+###################################
+
+set style line 1  lc rgb '#000000' pt 2 ps 1 lt 1 lw 1   # pure black	
+set style line 11 lc rgb '#2f4343' pt 2 ps 1 lt 1 lw 1   # RCT black
+set style line 12 lc rgb '#6f8383' pt 2 ps 1 lt 1 lw 1   # RCT dark grey
+set style line 2  lc rgb '#ff0000' pt 2 ps 1 lt 1 lw 1   # pure red
+set style line 21 lc rgb '#a33b3b' pt 2 ps 1 lt 1 lw 1   # RCT wine red
+set style line 22 lc rgb '#8f0000' pt 2 ps 1 lt 1 lw 1   # RCT dark red
+set style line 23 lc rgb '#e30700' pt 2 ps 1 lt 1 lw 1   # RCT red
+set style line 3  lc rgb '#0000ff' pt 2 ps 1 lt 1 lw 1   # pure blue
+set style line 31 lc rgb '#4387e3' pt 2 ps 1 lt 1 lw 1   # RCT sky blue
+set style line 32 lc rgb '#0f43bb' pt 2 ps 1 lt 1 lw 1   # RCT blue
+set style line 33 lc rgb '#3f4377' pt 2 ps 1 lt 1 lw 1   # RCT dark blue
+set style line 4  lc rgb '#00ff00' pt 2 ps 1 lt 1 lw 1   # pure green
+set style line 41 lc rgb '#1f7b00' pt 2 ps 1 lt 1 lw 1   # RCT grass green
+set style line 42 lc rgb '#47af27' pt 2 ps 1 lt 1 lw 1   # RCT light green
+set style line 43 lc rgb '#878b3b' pt 2 ps 1 lt 1 lw 1   # RCT dark brown green
+set style line 51 lc rgb '#ff6f17' pt 2 ps 1 lt 1 lw 1   # RCT orange
+set style line 52 lc rgb '#b74700' pt 2 ps 1 lt 1 lw 1   # RCT dark orange
+set style line 53 lc rgb '#7f571f' pt 2 ps 1 lt 1 lw 1   # RCT brown
+set style line 6  lc rgb '#ff00ff' pt 2 ps 1 lt 1 lw 1   # pure pink
+set style line 61 lc rgb '#db3b8f' pt 2 ps 1 lt 1 lw 1   # RCT pink
+set style line 62 lc rgb '#93074b' pt 2 ps 1 lt 1 lw 1   # RCT dark pink
+set style line 63 lc rgb '#8753bb' pt 2 ps 1 lt 1 lw 1   # RCT purple
+set style line 71 lc rgb '#00dddd' pt 2 ps 1 lt 1 lw 1   # cyan
+set style line 72 lc rgb '#00a0a0' pt 2 ps 1 lt 1 lw 1   # dark cyan
+set style line 81 lc rgb '#d7a713' pt 2 ps 1 lt 1 lw 1   # RCT yellow
+set style line 99 lc rgb '#808080' lt 0 lw 1
+
+cd0 = 11
+cd1 = 23
+cd2 = 31
+cd3 = 42
+cd4 = 51
+cd5 = 61
+cd6 = 71
+cd7 = 81
+
+cf0 = 1
+cf1 = 22
+cf2 = 33
+cf3 = 41
+cf4 = 52
+cf5 = 62
+cf6 = 72
+cf7 = 53
+
+###################################
+### ### ###    DATA     ### ### ###
+###################################
+
+data0	= 'APDzAlign23p00_31'
+data1	= 'SiPM_refl_Xem40_s11'
+data2	= 'SiPM_refl_Xem35_s11'
+data3	= 'SiPM_refl_Xem30_s11'
+data4	= 'SiPM_refl_Xem25_s11'
+data5	= 'SiPM_refl_Xem20_s11'
+data6	= 'SiPM_refl_Xem15_s11'
+data7	= 'SiPM_refl_Xem10_s11'
+data8	= 'SiPM_refl_Xem05_s11'
+data9	= 'SiPM_refl_Xen00_s12'
+data10	= 'SiPM_refl_Xep05_s11'
+data11	= 'SiPM_refl_Xep10_s11'
+data12	= 'SiPM_refl_Xep15_s11'
+data13	= 'SiPM_refl_Xep20_s11'
+
+dt0	= 'zero-peak'
+do for [i=1:8]{ eval(sprintf("dt%d = 'Xe-angle: -%d'",i,(45-i*5) )) }
+dt9	= 'Xe-angle: 00'
+do for [i=10:13]{ eval(sprintf("dt%d = 'Xe-angle: +%d'",i,(5+(i-10)*5) )) }
+
+###################################
+### ### ###  FUNCTIONS  ### ### ###
+###################################
+
+set sample 10000
+set fit errorvariables
+
+f(x,a,b,c) = ((x-b) !=0) ? a * sin(c*(b-x))/(c*(b-x)) + 18 : a
+
+e = 0.05
+w = 2.0
+d = 13
+
+guessa(A) = sprintf("a%d = 3000.0",A)
+guessb(B) = sprintf("b%d = 14.7 + 10.0 * %d",B,B)
+guessc(C) = sprintf("c%d = 1.0",C)
+printstr(M) = sprintf("print 'a%d = ', a%d, '\n', 'b%d = ', b%d, '\n', 'c%d = ', c%d",M,M,M,M,M,M)
+printerrstr(M) = sprintf("print 'a%d_err = ', a%d_err, '\n', 'b%d_err = ', b%d_err, '\n', 'c%d_err = ', c%d_err",M,M,M,M,M,M)
+fitstr(N) = sprintf("fit [b%d-w:b%d+w] f(x,a%d,b%d,c%d) data%d using 3:($6/10):(e):(sqrt($6/10)) xyerror via 'SiPM_refl_%d.par'",N,N,N,N,N,N,N)
+
+! rm SiPM_refl.par 
+set print 'SiPM_refl.par'
+
+do for [i=0:d] {
+	#eval(guessa(i+1))
+	#eval(guessb(i+1))
+	#eval(guessc(i+1))
+	set print 'SiPM_refl_'.i.'.par'
+	eval(printstr(i))
+	set print
+	eval(fitstr(i))
+	set print 'SiPM_refl.par' append
+	eval(printstr(i))
+	eval(printerrstr(i))
+	set print
+}
+
+###################################
+### ### ###    BODY     ### ### ###
+###################################
+
+set tics nomirror
+
+set grid back ls 99
+
+#set key top left
+#set key box
+#set key font "Verdana,8"
+
+set title 'Reflection peaks'
+set xlabel 'PMT-angle [deg]'
+set ylabel 'PMT rate [Hz]'
+set xrange [-5:160]
+set yrange [0:22000]
+
+plot 1/0 notitle
+do for [i=0:d] {
+	eval(sprintf("replot data%d using 3:($6/10) title dt%d ls cd%d",i,i,i%8))
+	eval(sprintf("replot [b%d-2*w:b%d+2*w] f(x,a%d,b%d,c%d) notitle ls cf%d",i,i,i,i,i,i%8))
+}
+

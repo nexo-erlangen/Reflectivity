@@ -1,0 +1,195 @@
+reset
+
+# png
+# set terminal png size 410,250 enhanced font 'Verdana,9'
+# set output 'data.png'
+# svg
+# set terminal svg size 800,500 fname 'Verdana, Helvetica, Arial, sans-serif' fsize '13' rounded dashed
+# set output 'refl_woerr.svg'
+
+###################################
+### ### ###   COLOURS   ### ### ###
+###################################
+
+set style line 1  lc rgb '#000000' pt 2 ps 1 lt 1 lw 1   # pure black	
+set style line 11 lc rgb '#2f4343' pt 2 ps 1 lt 1 lw 1   # RCT black
+set style line 12 lc rgb '#6f8383' pt 2 ps 1 lt 1 lw 1   # RCT dark grey
+set style line 2  lc rgb '#ff0000' pt 2 ps 1 lt 1 lw 1   # pure red
+set style line 21 lc rgb '#a33b3b' pt 2 ps 1 lt 1 lw 1   # RCT wine red
+set style line 22 lc rgb '#8f0000' pt 2 ps 1 lt 1 lw 1   # RCT dark red
+set style line 23 lc rgb '#e30700' pt 2 ps 1 lt 1 lw 1   # RCT red
+set style line 3  lc rgb '#0000ff' pt 2 ps 1 lt 1 lw 1   # pure blue
+set style line 31 lc rgb '#4387e3' pt 2 ps 1 lt 1 lw 1   # RCT sky blue
+set style line 32 lc rgb '#0f43bb' pt 2 ps 1 lt 1 lw 1   # RCT blue
+set style line 33 lc rgb '#3f4377' pt 2 ps 1 lt 1 lw 1   # RCT dark blue
+set style line 4  lc rgb '#00ff00' pt 2 ps 1 lt 1 lw 1   # pure green
+set style line 41 lc rgb '#1f7b00' pt 2 ps 1 lt 1 lw 1   # RCT grass green
+set style line 42 lc rgb '#47af27' pt 2 ps 1 lt 1 lw 1   # RCT light green
+set style line 43 lc rgb '#878b3b' pt 2 ps 1 lt 1 lw 1   # RCT dark brown green
+set style line 51 lc rgb '#ff6f17' pt 2 ps 1 lt 1 lw 1   # RCT orange
+set style line 52 lc rgb '#b74700' pt 2 ps 1 lt 1 lw 1   # RCT dark orange
+set style line 53 lc rgb '#7f571f' pt 2 ps 1 lt 1 lw 1   # RCT brown
+set style line 6  lc rgb '#ff00ff' pt 2 ps 1 lt 1 lw 1   # pure pink
+set style line 61 lc rgb '#db3b8f' pt 2 ps 1 lt 1 lw 1   # RCT pink
+set style line 62 lc rgb '#93074b' pt 2 ps 1 lt 1 lw 1   # RCT dark pink
+set style line 63 lc rgb '#8753bb' pt 2 ps 1 lt 1 lw 1   # RCT purple
+set style line 71 lc rgb '#00dddd' pt 2 ps 1 lt 1 lw 1   # cyan
+set style line 72 lc rgb '#00a0a0' pt 2 ps 1 lt 1 lw 1   # dark cyan
+set style line 81 lc rgb '#d7a713' pt 2 ps 1 lt 1 lw 1   # RCT yellow
+set style line 99 lc rgb '#808080' lt 0 lw 1
+
+###################################
+### ### ###  FUNCTIONS  ### ### ###
+###################################
+
+set sample 10000
+set fit errorvariables
+
+f(x,a,b,c) = a * sin(c*(b-x))/(c*(b-x)) + 18
+
+### Values Zero
+az              = 20614.9      #    +/- 337.2        (1.636%)
+bz              = 1.98004      #    +/- 0.0506       (2.556%)
+cz              = -1.26347     #    +/- 0.05716      (4.524%)
+### Values -40
+am40            = 1176.94      #    +/- 98.57        (8.375%)
+bm40            = 25.0636      #    +/- 0.1217       (0.4856%)
+cm40            = -0.9028      #    +/- 0.04057      (4.494%)
+### Values -35
+am35            = 3189.4       #    +/- 243          (7.618%)
+bm35            = 34.5623      #    +/- 0.1442       (0.4171%)
+cm35            = -0.903577    #    +/- 0.04864      (5.383%)
+### Values -30
+am30            = 4147.35      #    +/- 444.6        (10.72%)
+bm30            = 43.6543      #    +/- 0.3533       (0.8093%)
+cm30            = -0.77804     #    +/- 0.08919      (11.46%)
+### Values -25
+am25            = 3923.19      #    +/- 824.7        (21.02%)
+bm25            = 52.4147      #    +/- 2.135        (4.153%)
+cm25            = -0.489912    #    +/- 0.1775       (36.22%)
+### Values -20
+am20            = 3466.34      #    +/- 493.8        (14.25%)
+bm20            = 62.8979      #    +/- 0.7596       (1.208%)
+cm20            = -0.646762    #    +/- 0.1213       (18.76%)
+### Values -15
+am15            = 3571.01      #    +/- 509          (14.25%)
+bm15            = 73.3091      #    +/- 0.5328       (0.7268%)
+cm15            = -0.714848    #    +/- 0.108        (15.11%)
+### Values -10
+am10            = 3659.6       #    +/- 461.8        (12.62%)
+bm10            = 82.5662      #    +/- 0.9233       (1.118%)
+cm10            = -0.621366    #    +/- 0.1322       (21.28%)
+### Values -05
+am05            = 1632.46      #    +/- 611.8        (37.48%)
+bm05            = 93.5632      #    +/- 0.9413       (1.006%)
+cm05            = -1.01048     #    +/- 0.2908       (28.78%)
+### Values +00
+an00            = 3250.68      #    +/- 408.6        (12.57%)
+bn00            = 104.215      #    +/- 0.2849       (0.2734%)
+cn00            = -0.826399    #    +/- 0.08092      (9.792%)
+### Values +05
+ap05            = 3392.45      #    +/- 265.4        (7.824%)
+bp05            = 114.904      #    +/- 0.1387       (0.1207%)
+cp05            = -0.948914    #    +/- 0.04932      (5.198%)
+### Values +10
+ap10            = 1378.14      #    +/- 458.8        (33.29%)
+bp10            = 125.01       #    +/- 0.4608       (0.3686%)
+cp10            = -1.0893      #    +/- 0.1865       (17.12%)
+### Values +15
+ap15            = 1378.09      #    +/- 432.7        (31.4%)
+bp15            = 136.322      #    +/- 0.6182       (0.4535%)
+cp15            = -1.08207     #    +/- 0.2297       (21.23%)
+### Values +20
+ap20            = 843.189      #    +/- 340.1        (40.34%)
+bp20            = 147.72       #    +/- 1.177        (0.7966%)
+cp20            = -1.08858     #    +/- 0.2916       (26.79%)
+
+e=0.05
+w=2.0
+
+fit [bz-w:bz+w] f(x,az,bz,cz)		'APDzAlign23p00_31' using 3:($6/10):(e):(sqrt($6/10)) xyerror via az,bz,cz
+
+# do for [i=1:8] { fit [bm40-w:bm40+w] f(x,am40,bm40,cm40)	'SiPM_refl_Xem40_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am40,bm40,cm40 }
+
+fit [bm40-w:bm40+w] f(x,am40,bm40,cm40)	'SiPM_refl_Xem40_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am40,bm40,cm40
+fit [bm35-w:bm35+w] f(x,am35,bm35,cm35)	'SiPM_refl_Xem35_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am35,bm35,cm35
+fit [bm30-w:bm30+w] f(x,am30,bm30,cm30)	'SiPM_refl_Xem30_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am30,bm30,cm30
+fit [bm25-w:bm25+w] f(x,am25,bm25,cm25)	'SiPM_refl_Xem25_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am25,bm25,cm25
+fit [bm20-w:bm20+w] f(x,am20,bm20,cm20)	'SiPM_refl_Xem20_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am20,bm20,cm20
+fit [bm15-w:bm15+w] f(x,am15,bm15,cm15)	'SiPM_refl_Xem15_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am15,bm15,cm15
+fit [bm10-w:bm10+w] f(x,am10,bm10,cm10)	'SiPM_refl_Xem10_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am10,bm10,cm10
+fit [bm05-w:bm05+w] f(x,am05,bm05,cm05)	'SiPM_refl_Xem05_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via am05,bm05,cm05
+fit [bn00-w:bn00+w] f(x,an00,bn00,cn00)	'SiPM_refl_Xen00_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via an00,bn00,cn00
+fit [bp05-w:bp05+w] f(x,ap05,bp05,cp05)	'SiPM_refl_Xep05_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via ap05,bp05,cp05
+fit [bp10-w:bp10+w] f(x,ap10,bp10,cp10)	'SiPM_refl_Xep10_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via ap10,bp10,cp10
+fit [bp15-w:bp15+w] f(x,ap15,bp15,cp15)	'SiPM_refl_Xep15_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via ap15,bp15,cp15
+fit [bp20-w:bp20+w] f(x,ap20,bp20,cp20)	'SiPM_refl_Xep20_s11' using 3:($6/10):(e):(sqrt($6/10)) xyerror via ap20,bp20,cp20
+
+set print "SiPM_refl.par"
+print '#  a	b	c	a_err		b_err		c_err'
+print am40,	bm40,	cm40,	am40_err,	bm40_err,	cm40_err
+print am35,	bm35,	cm35,	am35_err,	bm35_err,	cm35_err
+print am30,	bm30,	cm30,	am30_err,	bm30_err,	cm30_err
+print am25,	bm25,	cm25,	am25_err,	bm25_err,	cm25_err
+print am20,	bm20,	cm20,	am20_err,	bm20_err,	cm20_err
+print am15,	bm15,	cm15,	am15_err,	bm15_err,	cm15_err
+print am10,	bm10,	cm10,	am10_err,	bm10_err,	cm10_err
+print am05,	bm05,	cm05,	am05_err,	bm05_err,	cm05_err
+print an00,	bn00,	cn00,	an00_err,	bn00_err,	cn00_err
+print ap05,	bp05,	cp05,	ap05_err,	bp05_err,	cp05_err
+print ap10,	bp10,	cp10,	ap10_err,	bp10_err,	cp10_err
+print ap15,	bp15,	cp15,	ap15_err,	bp15_err,	cp15_err
+print ap20,	bp20,	cp20,	ap20_err,	bp20_err,	cp20_err
+
+set print
+
+###################################
+### ### ###    BODY     ### ### ###
+###################################
+
+set tics nomirror
+
+set grid back ls 99
+
+#set key top left
+#set key box
+#set key font "Verdana,8"
+
+set title 'Reflection peaks'
+set xlabel 'PMT-angle [deg]'
+set ylabel 'PMT rate [Hz]'
+set xrange [-5:160]
+set yrange [0:24000]
+
+plot	'APDzAlign23p00_31' using 3:($6/10) title 'Zero-Angle' ls 11, \
+	'SiPM_refl_Xem40_s11' using 3:($6/10) title 'Xe -40' ls 23, \
+	'SiPM_refl_Xem35_s11' using 3:($6/10) title 'Xe -35' ls 31, \
+	'SiPM_refl_Xem30_s11' using 3:($6/10) title 'Xe -30' ls 42, \
+	'SiPM_refl_Xem25_s11' using 3:($6/10) title 'Xe -25' ls 51, \
+	'SiPM_refl_Xem20_s11' using 3:($6/10) title 'Xe -20' ls 61, \
+	'SiPM_refl_Xem15_s11' using 3:($6/10) title 'Xe -15' ls 71, \
+	'SiPM_refl_Xem10_s11' using 3:($6/10) title 'Xe -10' ls 81, \
+	'SiPM_refl_Xem05_s11' using 3:($6/10) title 'Xe -05' ls 11, \
+	'SiPM_refl_Xen00_s11' using 3:($6/10) title 'Xe +00' ls 23, \
+	'SiPM_refl_Xep05_s11' using 3:($6/10) title 'Xe +05' ls 31, \
+	'SiPM_refl_Xep10_s11' using 3:($6/10) title 'Xe +10' ls 42, \
+	'SiPM_refl_Xep15_s11' using 3:($6/10) title 'Xe +15' ls 51, \
+	'SiPM_refl_Xep20_s11' using 3:($6/10) title 'Xe +20' ls 61, \
+	[bz-2*w:bz+2*w]		f(x,az,bz,cz)		notitle	ls 1, \
+	[bm40-2*w:bm40+2*w]	f(x,am40,bm40,cm40)	notitle	ls 22,\
+	[bm35-2*w:bm35+2*w]	f(x,am35,bm35,cm35)	notitle	ls 33,\
+	[bm30-2*w:bm30+2*w]	f(x,am30,bm30,cm30)	notitle	ls 41,\
+	[bm25-2*w:bm25+2*w]	f(x,am25,bm25,cm25)	notitle	ls 52,\
+	[bm20-2*w:bm20+2*w]	f(x,am20,bm20,cm20)	notitle	ls 62,\
+	[bm15-2*w:bm15+2*w]	f(x,am15,bm15,cm15)	notitle	ls 72,\
+	[bm10-2*w:bm10+2*w]	f(x,am10,bm10,cm10)	notitle	ls 53,\
+	[bm05-2*w:bm05+2*w]	f(x,am05,bm05,cm05)	notitle	ls 1, \
+	[bn00-2*w:bn00+2*w]	f(x,an00,bn00,cn00)	notitle	ls 22,\
+	[bp05-2*w:bp05+2*w]	f(x,ap05,bp05,cp05)	notitle	ls 33,\
+	[bp10-2*w:bp10+2*w]	f(x,ap10,bp10,cp10)	notitle	ls 41,\
+	[bp15-2*w:bp15+2*w]	f(x,ap15,bp15,cp15)	notitle	ls 52,\
+	[bp20-2*w:bp20+2*w]	f(x,ap20,bp20,cp20)	notitle	ls 62
+
+
+
+
